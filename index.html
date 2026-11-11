@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gestor de arriendos con IA · Prototipo</title>
+<title>Llavero · Gestor de arriendos con IA</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 :root{--bg:#eef1f5;--sf:#fff;--tx:#12202e;--mu:#56667a;--bd:#cfd7e2;--ok:#17734f;--wa:#a86a00;--no:#b3321f;--hl:#f3c24b;--c1:#264b8a;--c2:#b7600a;--c3:#0f766e;--s1:#e4ecf9;--s2:#fbeedd;--s3:#dcf1ee;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -71,7 +71,7 @@ dt{color:var(--mu);font-size:.78rem}dd{margin:0;font-weight:600;font-size:.93rem
 </head>
 <body data-sec="rentabilidad">
 <header class="hero wrap" style="max-width:none">
-<div><h1>Gestor de arriendos con IA</h1><p>Para arrendadores de 1 a 10 unidades: decide si un arriendo conviene, organiza los arreglos y compara quién los repara.</p></div>
+<div><h1>🔑 Llavero</h1><p>Gestor de arriendos con IA para arrendadores de 1 a 10 unidades: decide si un arriendo conviene, organiza los arreglos y compara quién los repara.</p></div>
 <svg class="sky" viewBox="0 0 260 90" aria-hidden="true"><g fill="currentColor"><rect x="10" y="40" width="34" height="50"/><rect x="52" y="14" width="40" height="76"/><rect x="100" y="52" width="30" height="38"/><rect x="138" y="26" width="44" height="64"/><path d="M196 90V56l24-20 24 20v34z"/></g><g fill="#f3c24b" fill-opacity=".7"><rect x="62" y="26" width="6" height="8"/><rect x="76" y="26" width="6" height="8"/><rect x="62" y="44" width="6" height="8"/><rect x="150" y="38" width="6" height="8"/><rect x="164" y="38" width="6" height="8"/><rect x="214" y="62" width="12" height="28"/></g></svg>
 </header>
 <div class="wrap">
@@ -102,7 +102,7 @@ dt{color:var(--mu);font-size:.78rem}dd{margin:0;font-weight:600;font-size:.93rem
 <div id="pstats" class="tiles"></div>
 <div id="plist" class="pgrid"></div>
 </section>
-
+ 
 <section id="v-arreglos">
 <h2>Arreglos</h2>
 <p class="sub">Registra cada arreglo con su fecha y sigue su estado, del aviso al trabajo terminado.</p>
@@ -115,7 +115,7 @@ dt{color:var(--mu);font-size:.78rem}dd{margin:0;font-weight:600;font-size:.93rem
 </div><datalist id="units"></datalist></form>
 <div id="alist"></div>
 </section>
-
+ 
 <section id="v-reparaciones">
 <h2>Reparaciones</h2>
 <p class="sub">Describe el problema con tus palabras. Se identifica el tipo de arreglo y se comparan opciones por precio, espera y calificación. Al agendar, aparece en el calendario.</p>
@@ -134,7 +134,7 @@ dt{color:var(--mu);font-size:.78rem}dd{margin:0;font-weight:600;font-size:.93rem
 </main>
 <p class="note">Prototipo con datos de ejemplo: los técnicos y precios son ficticios, y la IA del comparador es una clasificación por palabras clave. Tus inmuebles y arreglos se guardan solo en este navegador.</p>
 </div>
-
+ 
 <script>
 const $=s=>document.querySelector(s);
 const cop=n=>new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(n);
@@ -149,13 +149,13 @@ let A=[{id:3,u:'Apto 201 · Chapinero',d:'Cambiar sifón del lavaplatos',f:addD(
 try{const s=JSON.parse(localStorage.getItem('gestor-v2'));if(s&&Array.isArray(s.P)&&Array.isArray(s.A)){P=s.P;A=s.A;uid=s.u||uid}}catch(e){}
 const save=()=>{try{localStorage.setItem('gestor-v2',JSON.stringify({P,A,u:uid}))}catch(e){}};
 let cal=new Date();cal=new Date(cal.getFullYear(),cal.getMonth(),1);
-
+ 
 /* Navegación por hash */
 const TABS=['rentabilidad','arreglos','reparaciones'];
 function show(t){if(!TABS.includes(t))t=TABS[0];document.body.dataset.sec=t;document.querySelectorAll('nav button').forEach(b=>{const on=b.dataset.t===t;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});document.querySelectorAll('main>section').forEach(s=>s.classList.toggle('on',s.id==='v-'+t))}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{location.hash=b.dataset.t});
 addEventListener('hashchange',()=>show(location.hash.slice(1)));
-
+ 
 /* Rentabilidad */
 function calc(p){const g=p.c*12/p.v,inc=p.c*(12-p.vac)-p.a*12-p.p-p.m,net=inc/p.v,um=p.um/100,minc=(um*p.v+p.a*12+p.p+p.m)/Math.max(.5,12-p.vac);let cls='no',txt='No viable',msg='Rinde menos de lo que exiges. Revisa el canon o los gastos.';if(net>=um){cls='ok';txt='Viable';msg='Cumple la rentabilidad que pediste.'}else if(net>=um*.75){cls='wa';txt='Ajustado';msg='Está cerca de tu meta: un pequeño ajuste lo haría viable.'}return{g,inc,net,minc,cls,txt,msg}}
 const num=id=>parseFloat($('#'+id).value)||0;
@@ -172,7 +172,7 @@ function drawP(){
  save();
 }
 $('#plist').onclick=e=>{const id=+e.target.dataset.dp;if(id){P=P.filter(p=>p.id!==id);drawP()}};
-
+ 
 /* Arreglos */
 function drawA(){
  $('#astats').innerHTML=ST.map((s,i)=>`<div class="tile s${i}"><span>${s}</span><strong>${A.filter(x=>x.s===i).length}</strong></div>`).join('');
@@ -183,7 +183,7 @@ function drawA(){
 $('#alist').onclick=e=>{const c=+e.target.dataset.c,x=+e.target.dataset.x;if(c){const a=A.find(z=>z.id===c);a.s=(a.s+1)%3;drawA()}if(x){A=A.filter(z=>z.id!==x);drawA()}};
 $('#adt').value=iso(new Date());
 $('#af').onsubmit=e=>{e.preventDefault();A.push({id:uid++,u:$('#au').value.trim(),d:$('#ad').value.trim(),f:$('#adt').value,s:0});$('#ad').value='';drawA()};
-
+ 
 /* Calendario (se muestra en Reparaciones) */
 function drawCal(){
  const y=cal.getFullYear(),m=cal.getMonth(),off=(new Date(y,m,1).getDay()+6)%7,nd=new Date(y,m+1,0).getDate(),tot=Math.ceil((off+nd)/7)*7,td=iso(new Date());
@@ -197,7 +197,7 @@ function drawCal(){
 const mv=n=>{cal=new Date(cal.getFullYear(),cal.getMonth()+n,1);drawCal()};
 $('#cprev').onclick=()=>mv(-1);$('#cnext').onclick=()=>mv(1);
 $('#ctoday').onclick=()=>{const d=new Date();cal=new Date(d.getFullYear(),d.getMonth(),1);drawCal()};
-
+ 
 /* Reparaciones (clasificación por palabras clave, datos de ejemplo) */
 const DB={
  plomeria:{n:'Plomería',e:'🚰',k:['fuga','gotea','tuberia','llave','grifo','agua','bano','sanitario','inodoro','ducha','sifon','lavamanos','humedad','tapado','destapar'],t:[['Hidro Rápido',120000,1,4.5],['Plomeros del Norte',95000,3,4.2],['Don Gilberto',70000,5,3.9]]},
@@ -218,7 +218,7 @@ function find(){
 }
 $('#go').onclick=find;
 $('#rres').onclick=e=>{const i=e.target.dataset.a;if(i===undefined)return;const r=RS[+i],d=new Date();d.setDate(d.getDate()+r.x[2]);cal=new Date(d.getFullYear(),d.getMonth(),1);A.push({id:uid++,u:$('#runit').value||'Sin asignar',d:r.c.n+' con '+r.x[0],f:iso(d),s:0});drawA();$('#ccal').scrollIntoView()};
-
+ 
 drawP();drawA();preview();show(location.hash.slice(1));
 </script>
 </body>
